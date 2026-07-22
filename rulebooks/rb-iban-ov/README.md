@@ -2,7 +2,7 @@
 
 * Author(s):
   * [Ricky Lamberty, Robert Bosch GmbH]
-  * [Stephan-A Fuchs, Deutsche Bank AG]
+  * [Stephan Fuchs, Deutsche Bank AG]
 * Previous Authors:
 * Reviewer(s):
   * [Florin Coptil, Robert Bosch GmbH]
