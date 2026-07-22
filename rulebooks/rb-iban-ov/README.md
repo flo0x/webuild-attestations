@@ -17,13 +17,14 @@
 | 0.2     | 17.06.2026 | Reviewed version based on the initial draft 					 |
 | 0.3     | 25.06.2026 | Alignment with data schema and natural persons requirements	 |
 | 0.4     | 13.07.2026 | Harmonization and extension of natural persons requirements	 |
+| 0.6     | 22.07.2026 | Bug fixing and inclusion of national account number.			 |
 
 * Contact:
   * [Ricky Lamberty](mailto:Ricky.Lamberty@bosch.com)*
 
 * Feedback:
 
----
+
 
 ## 1 Introduction
 This attestation addresses the following question:
@@ -84,13 +85,12 @@ In addition, 'must' (non-capitalised) is used to indicate an external constraint
 | KYS         | Know Your Supplier — due diligence process for verifying supplier identity and integrity.																						|
 | Legal Person | A legal entity registered in a national or EU company register, identified by an EUID. For IBAN-OV purposes, the account owner in the legal_person case						|
 | Sole Trader | A natural person operating a business who is registered in a national register                                                                                                  |
-| Owner_Type  | A discriminator attribute within *Account_Ownership* that explicitly identifies whether the account owner is a legal entity or a natural person.			     				|
+| Owner Type  | A discriminator attribute within *Account_Ownership* that explicitly identifies whether the account owner is a legal entity or a natural person.			     				|
 | ISO 4217:2015    | International standard defining currency codes (e.g., EUR, USD, GBP)                                                                                                       |
 | ISO 13616-1:2020   | International standard defining the IBAN format and validation rules                                                                                                     |
 | ISO 9362:2014    | International standard defining the BIC/SWIFT code format                                                                                                                  |
 | ISO 3166-1  | International standard defining country codes (Alpha-3 code)                                                                                                                    |
 
----
 
 ## 2 Attestation attributes and metadata
 
@@ -100,31 +100,31 @@ The IBAN-OV Attestation is a document that provides verified information about t
 
 **Data Model:**
 
-```
 IBAN-OV Attestation
 │
-├── Bank_Account
-│ ├── account_name
-│ ├── iban
-│ ├── account_type
-│ └── account_currency
+├── Bank_Account 
+│ ├── account_name				(m)
+│ ├── iban						(m)
+│ ├── national_account_number	(o)
+│ ├── account_type				(m)
+│ └── account_currency			(m)
 │
 ├── Account_Ownership 
-│ ├── owner_type 
-│ └── owner_name		(mandatory if legal person, 'entity')
-│ └── euid
-│ ├── given_name		(mandatory if natural person, 'person')
-│ ├── surname			(mandatory if natural person, 'person')
+│ ├── owner_type 				(m)
+│ └── owner_name				(m)		(mandatory if legal person, 'entity')
+│ └── euid						(o)
+│ ├── given_name				(m)		(mandatory if natural person, 'person')
+│ ├── surname					(m)		(mandatory if natural person, 'person')
 │
 └── Account_Provider
-  ├── provider_name
-  ├── euid
-  ├── provider_country
-  ├── bic_swift
-  ├── national_bank_code
-  ├── nace_code
-  ├── clearing_number
-```
+  ├── provider_name				(m)
+  ├── euid						(m)
+  ├── provider_country			(m)
+  ├── bic_swift					(m)
+  ├── national_bank_code		(o)	
+  ├── nace_code					(o)	
+  └── clearing_number			(o)
+
 
 **Explanation:**
 
