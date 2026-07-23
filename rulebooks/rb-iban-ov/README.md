@@ -340,26 +340,26 @@ For SD-JWT VC-compliant IBAN-OV attestations, the attestation MUST include a `st
 the technical validity period is greater than 24 hours. This claim enables Relying Parties to
 determine if a credential has been revoked via a status list mechanism, as specified in SD-JWT VC.
 
-The `status` claim SHALL be a JSON object with the following members:
+The `status` claim SHALL be a JSON object containing a `status_list` member with the following fields:
 
-- `type` (string): SHALL be `"status-list"`.
-- `status_list_credential` (string, URI): The URI of the Status List Credential document that
-  contains the status bitstring.
-- `status_list_index` (integer, >= 0): The zero-based index into the status list bitstring that
-  corresponds to this credential.
-- `status_purpose` (string): SHALL be `"revocation"` for this attestation.
+- `idx` (integer, >= 0): The zero-based index into the status list bitstring that corresponds to this credential.
+- `uri` (string, URI): The URI of the Status List Token that contains the status bitstring for this credential.
+
+This structure follows the Token Status List specification as defined in [draft-ietf-oauth-status-list-21]:
+https://datatracker.ietf.org/doc/draft-ietf-oauth-status-list/21/
 
 Example:
 
 ```json
 {
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://issuer.example.com/status/iban-ov/2025",
-    "status_list_index": 456,
-    "status_purpose": "revocation"
+    "status_list": {
+      "idx": 456,
+      "uri": "https://issuer.example.com/status/iban-ov/2026"
+    }
   }
 }
+
 ```
 
 #### 3.2.3 Example Payload
@@ -396,10 +396,9 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
     "clearing_number": "37040044"
   },
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://bank.example.com/status/iban-ov/2025",
-    "status_list_index": 456,
-    "status_purpose": "revocation"
+  "status_list": {
+    "idx": 456,
+    "uri": "https://bank.example.com/status/iban-ov/2025"
   }
 }
 ```
@@ -436,10 +435,9 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
     "clearing_number": "37040044"
   },
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://bank.example.com/status/iban-ov/2025",
-    "status_list_index": 457,
-    "status_purpose": "revocation"
+  "status_list": {
+    "idx": 457,
+    "uri": "https://bank.example.com/status/iban-ov/2026"
   }
 }
 ```
@@ -501,5 +499,6 @@ This chapter will be completed in a future version of this Rulebook.
 | [RFC 8949]                             |RFC 8949 — Concise Binary Object Representation (CBOR), C. Bormann et al., December 2020|
 | [SD-JWT VC]                            | SD-JWT-based Verifiable Credentials (SD-JWT VC). Available: https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/, version draft-ietf-oauth-sd-jwt-vc-09|
 | [Topic 7]                              |ARF Annex 2 - Topic 7 - Attestation revocation and revocation checking. Available: https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/annexes/annex-2/annex-2-high-level-requirements/#a237-topic-7-attestation-revocation-and-revocation-checking|
+| [Token Status List] | OAuth Status List. draft-ietf-oauth-status-list-21. Available: https://www.ietf.org/archive/id/draft-ietf-oauth-status-list-21.html |
 
 
