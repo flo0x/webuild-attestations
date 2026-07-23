@@ -104,21 +104,21 @@ The IBAN-OV Attestation is a document that provides verified information about t
 
 ```IBAN-OV Attestation
 │
-├── Bank_Account 
+├── Bank_Account 				(m)
 │ ├── account_name				(m)
 │ ├── iban						(m)
 │ ├── national_account_number	(o)
 │ ├── account_type				(m)
 │ └── account_currency			(m)
 │
-├── Account_Ownership 
+├── Account_Ownership 			(m)
 │ ├── owner_type 				(m)
 │ └── owner_name				(m)		(mandatory if legal person, 'entity')
 │ └── euid						(o)
 │ ├── given_name				(m)		(mandatory if natural person, 'person')
 │ ├── surname					(m)		(mandatory if natural person, 'person')
 │
-└── Account_Provider
+└── Account_Provider			(m)
   ├── provider_name				(m)
   ├── euid						(m)
   ├── provider_country			(m)
