@@ -18,6 +18,8 @@
 | 0.3     | 25.06.2026 | Alignment with data schema and natural persons requirements	 |
 | 0.4     | 13.07.2026 | Harmonization and extension of natural persons requirements	 |
 | 0.6     | 22.07.2026 | Bug fixing and inclusion of national account number.			 |
+| 1.0     | 23.07.2026 | Adressed final comments raised by the reviewers. 				 |
+
 
 * Contact:
   * [Ricky Lamberty](mailto:Ricky.Lamberty@bosch.com)*
