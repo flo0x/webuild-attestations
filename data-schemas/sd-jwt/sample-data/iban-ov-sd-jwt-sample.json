@@ -32,10 +32,10 @@
   },
 
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://bank.example.com/status/iban-ov/2025",
-    "status_list_index": 456,
-    "status_purpose": "revocation"
+    "status_list": {
+      "idx": 456,
+      "uri": "https://bank.example.com/status/iban-ov/2025"
+    }
   },
 
   "trust_anchor_url": "https://trust.webuildconsortium.eu/anchors/qtsp/eidas-tl",
