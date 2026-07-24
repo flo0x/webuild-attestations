@@ -6,6 +6,16 @@
   "attestation_legal_category": "EAA",
   "schema_version": "1.0",
   "trust_anchor_url": "https://trust.webuildconsortium.eu/anchors/eidas-tl",
+  "legal_entity": {
+    "legal_person": {
+      "legal_person_name": "Example GmbH",
+      "legal_form_type": "GmbH"
+    },
+    "identifier": {
+      "euid": "DE1212.HRB123456",
+      "tax": "DE123456789"
+    }
+  },
   "contact_persons": [
     {
       "given_name": "Anna",
