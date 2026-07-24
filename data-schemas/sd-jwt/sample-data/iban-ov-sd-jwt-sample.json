@@ -1,5 +1,5 @@
 {
-  "vct": "eu.we-build.iban-ov:1",
+  "vct": "eu.we-build:iban-ov:1",
   "iss": "https://bank.example.com",
   "iat": 1736935200,
   "exp": 1768471200,
