@@ -2,7 +2,7 @@
 
 * Author(s):
   * [Ricky Lamberty, Robert Bosch GmbH]
-  * [Stephan-A Fuchs, Deutsche Bank AG]
+  * [Stephan Fuchs, Deutsche Bank AG]
 * Previous Authors:
 * Reviewer(s):
   * [Florin Coptil, Robert Bosch GmbH]
@@ -17,13 +17,16 @@
 | 0.2     | 17.06.2026 | Reviewed version based on the initial draft 					 |
 | 0.3     | 25.06.2026 | Alignment with data schema and natural persons requirements	 |
 | 0.4     | 13.07.2026 | Harmonization and extension of natural persons requirements	 |
+| 0.6     | 22.07.2026 | Bug fixing and inclusion of national account number.			 |
+| 1.0     | 23.07.2026 | Adressed final comments raised by the reviewers. 				 |
+
 
 * Contact:
   * [Ricky Lamberty](mailto:Ricky.Lamberty@bosch.com)*
 
 * Feedback:
 
----
+
 
 ## 1 Introduction
 This attestation addresses the following question:
@@ -84,13 +87,12 @@ In addition, 'must' (non-capitalised) is used to indicate an external constraint
 | KYS         | Know Your Supplier — due diligence process for verifying supplier identity and integrity.																						|
 | Legal Person | A legal entity registered in a national or EU company register, identified by an EUID. For IBAN-OV purposes, the account owner in the legal_person case						|
 | Sole Trader | A natural person operating a business who is registered in a national register                                                                                                  |
-| Owner_Type  | A discriminator attribute within *Account_Ownership* that explicitly identifies whether the account owner is a legal entity or a natural person.			     				|
+| Owner Type  | A discriminator attribute within *Account_Ownership* that explicitly identifies whether the account owner is a legal entity or a natural person.			     				|
 | ISO 4217:2015    | International standard defining currency codes (e.g., EUR, USD, GBP)                                                                                                       |
 | ISO 13616-1:2020   | International standard defining the IBAN format and validation rules                                                                                                     |
 | ISO 9362:2014    | International standard defining the BIC/SWIFT code format                                                                                                                  |
 | ISO 3166-1  | International standard defining country codes (Alpha-3 code)                                                                                                                    |
 
----
 
 ## 2 Attestation attributes and metadata
 
@@ -100,30 +102,30 @@ The IBAN-OV Attestation is a document that provides verified information about t
 
 **Data Model:**
 
-```
-IBAN-OV Attestation
+```IBAN-OV Attestation
 │
-├── Bank_Account
-│ ├── account_name
-│ ├── iban
-│ ├── account_type
-│ └── account_currency
+├── Bank_Account 				(m)
+│ ├── account_name				(m)
+│ ├── iban						(m)
+│ ├── national_account_number	(o)
+│ ├── account_type				(m)
+│ └── account_currency			(m)
 │
-├── Account_Ownership 
-│ ├── owner_type 
-│ └── owner_name		(mandatory if legal person, 'entity')
-│ └── euid
-│ ├── given_name		(mandatory if natural person, 'person')
-│ ├── surname			(mandatory if natural person, 'person')
+├── Account_Ownership 			(m)
+│ ├── owner_type 				(m)
+│ └── owner_name				(m)		(mandatory if legal person, 'entity')
+│ └── euid						(o)
+│ ├── given_name				(m)		(mandatory if natural person, 'person')
+│ ├── surname					(m)		(mandatory if natural person, 'person')
 │
-└── Account_Provider
-  ├── provider_name
-  ├── euid
-  ├── provider_country
-  ├── bic_swift
-  ├── national_bank_code
-  ├── nace_code
-  ├── clearing_number
+└── Account_Provider			(m)
+  ├── provider_name				(m)
+  ├── euid						(m)
+  ├── provider_country			(m)
+  ├── bic_swift					(m)
+  ├── national_bank_code		(o)	
+  ├── nace_code					(o)	
+  └── clearing_number			(o)
 ```
 
 **Explanation:**
@@ -340,26 +342,26 @@ For SD-JWT VC-compliant IBAN-OV attestations, the attestation MUST include a `st
 the technical validity period is greater than 24 hours. This claim enables Relying Parties to
 determine if a credential has been revoked via a status list mechanism, as specified in SD-JWT VC.
 
-The `status` claim SHALL be a JSON object with the following members:
+The `status` claim SHALL be a JSON object containing a `status_list` member with the following fields:
 
-- `type` (string): SHALL be `"status-list"`.
-- `status_list_credential` (string, URI): The URI of the Status List Credential document that
-  contains the status bitstring.
-- `status_list_index` (integer, >= 0): The zero-based index into the status list bitstring that
-  corresponds to this credential.
-- `status_purpose` (string): SHALL be `"revocation"` for this attestation.
+- `idx` (integer, >= 0): The zero-based index into the status list bitstring that corresponds to this credential.
+- `uri` (string, URI): The URI of the Status List Token that contains the status bitstring for this credential.
+
+This structure follows the Token Status List specification as defined in [draft-ietf-oauth-status-list-21]:
+https://datatracker.ietf.org/doc/draft-ietf-oauth-status-list/21/
 
 Example:
 
 ```json
 {
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://issuer.example.com/status/iban-ov/2025",
-    "status_list_index": 456,
-    "status_purpose": "revocation"
+    "status_list": {
+      "idx": 456,
+      "uri": "https://issuer.example.com/status/iban-ov/2026"
+    }
   }
 }
+
 ```
 
 #### 3.2.3 Example Payload
@@ -388,7 +390,7 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
   },
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "bank_identifier": "DE-HRB-654321",
+    "euid": "DE12121.HRB654321",
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",
@@ -396,10 +398,9 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
     "clearing_number": "37040044"
   },
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://bank.example.com/status/iban-ov/2025",
-    "status_list_index": 456,
-    "status_purpose": "revocation"
+  "status_list": {
+    "idx": 456,
+    "uri": "https://bank.example.com/status/iban-ov/2025"
   }
 }
 ```
@@ -428,7 +429,7 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
   },
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "bank_identifier": "DE-HRB-654321",
+    "euid": "DE1212.HRB654321",
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",
@@ -436,10 +437,9 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
     "clearing_number": "37040044"
   },
   "status": {
-    "type": "status-list",
-    "status_list_credential": "https://bank.example.com/status/iban-ov/2025",
-    "status_list_index": 457,
-    "status_purpose": "revocation"
+  "status_list": {
+    "idx": 457,
+    "uri": "https://bank.example.com/status/iban-ov/2026"
   }
 }
 ```
@@ -501,5 +501,6 @@ This chapter will be completed in a future version of this Rulebook.
 | [RFC 8949]                             |RFC 8949 — Concise Binary Object Representation (CBOR), C. Bormann et al., December 2020|
 | [SD-JWT VC]                            | SD-JWT-based Verifiable Credentials (SD-JWT VC). Available: https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/, version draft-ietf-oauth-sd-jwt-vc-09|
 | [Topic 7]                              |ARF Annex 2 - Topic 7 - Attestation revocation and revocation checking. Available: https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/annexes/annex-2/annex-2-high-level-requirements/#a237-topic-7-attestation-revocation-and-revocation-checking|
+| [Token Status List] | OAuth Status List. draft-ietf-oauth-status-list-21. Available: https://www.ietf.org/archive/id/draft-ietf-oauth-status-list-21.html |
 
 
