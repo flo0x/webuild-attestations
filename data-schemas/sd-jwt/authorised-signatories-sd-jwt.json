@@ -295,8 +295,7 @@
                   "Managing Director"
                 ]
               }
-            }
-          },
+            },
             "required": [
               "representation_type"
             ]
