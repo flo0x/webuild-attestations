@@ -390,7 +390,7 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
   },
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "bank_identifier": "DE-HRB-654321",
+    "euid": "DE12121.HRB654321",
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",
@@ -429,7 +429,7 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
   },
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "bank_identifier": "DE-HRB-654321",
+    "euid": "DE1212.HRB654321",
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",
