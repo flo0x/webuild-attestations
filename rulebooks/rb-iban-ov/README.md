@@ -291,7 +291,7 @@ The IBAN-OV attestation uses the SD-JWT VC format to allow for selective disclos
 
 The `.` notation is used to indicate the nesting of attributes.
 
-**Verifiable Credential Type (`vct`):** `vct: eu.we-build.iban-ov.1`
+**Verifiable Credential Type (`vct`):** `vct: eu.we-build:iban-ov.1`
 
 
 #### 3.2.1 Attribute Encoding Table
@@ -370,7 +370,7 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
 
 ```json
 {
-  "vct": "eu.we-build.iban-ov.1",
+  "vct": "eu.we-build:iban-ov:1",
   "iss": "https://bank.example.com",
   "iat": 1736935200,
   "exp": 1768471200,
@@ -398,18 +398,18 @@ The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a *
     "clearing_number": "37040044"
   },
   "status": {
-  "status_list": {
-    "idx": 456,
-    "uri": "https://bank.example.com/status/iban-ov/2025"
+    "status_list": {
+      "idx": 456,
+      "uri": "https://bank.example.com/status/iban-ov/2025"
+    }
   }
-}
 ```
 
 The following is a non-normative example of an IBAN-OV SD-JWT VC payload for a **natural person (sole trader)**:
 
 ```json
 {
-  "vct": "eu.we-build.iban-ov.1",
+  "vct": "eu.we-build:iban-ov:1",
   "iss": "https://bank.example.com",
   "iat": 1736935200,
   "exp": 1768471200,
@@ -451,11 +451,23 @@ Sample payloads are provided under ../data-schemas/sd-jwt/sample-data/iban-ov-sd
 
 ## 4 Attestation usage
 ### 4.1. Issuance process ###
+
 The IBAN-OV attestation is issued by the bank (ASPSP) holding the account, either:
 - Within the RP registration process, or
 - Upon explicit request from the legal entity owning the IBAN account.
 
+- The issuer (i.e., the legal entity itself) issues the attestation based on the information and
+  supporting documentation available at the time of issuance.
+
+- The issuer is responsible for ensuring that the attested information remains accurate and
+  must immediately revoke the attestation if any change occurs that affects the validity or accuracy of the underlying data.
+
+- The issuer is responsible for ensuring that the device binding is assured
+  - ex. EUDI Wallet
+  - ex. EBW Wallet - always in the same wallet by onboarding
+
 ### 4.2 Relying Party Obligations
+
 When receiving and processing an attestation, the Relying Party SHALL perform the following verification obligations.
 
 ### 4.2.1 – 4.2.8 Base Verification Process
