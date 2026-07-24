@@ -23,6 +23,7 @@
 | 0.7     | 24.06.2026 | Updates of content based on the submisson regulation and AMLR/RTS |
 | 0.8     | 29.06.2026 | Updates of content based on BOS - vocabulary                      |
 | 0.9     | 03.07.2026 | Updates in regard trust and revocation                            |
+| 1.0     | 23.07.2026 | Input PA3                                                         |
 
 * Contact:
   * [Florin Coptil](mailto:florin.coptil@bosch.com)*
