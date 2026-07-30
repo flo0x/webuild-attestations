@@ -100,6 +100,7 @@ The IBAN-OV Attestation is a document that provides verified information about t
 
 **Data Model:**
 
+´´ 
 IBAN-OV Attestation
 │
 ├── Bank_Account 				(m)
@@ -129,6 +130,7 @@ IBAN-OV Attestation
   ├── nace_code					(o)	
   └── clearing_number			(o)
 
+´´ 
 
 **Explanation:**
 
