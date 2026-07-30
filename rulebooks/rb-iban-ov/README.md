@@ -176,7 +176,7 @@ This attestation type MAY be classified as:
 |---------------------|------------------------|-----------------------------------------------------------------------------------------------------|-----------------|
 | provider_name       | tbd                    | Name of the financial institution providing the account.                                            | String          |
 | legal_person_identifiers | tbd               | Array of objects containing unique identification strings of the financial institution.               | Array [Object]|
-| legal_person_identifiers[n].type | tbd       | Scheme or type of the identifier used (e.g., 'EUID', 'LEI', 'BIC').                           | String        |
+| legal_person_identifiers[n].type | tbd       | Scheme or type of the identifier used (e.g., 'EUID', 'LEI', 'TAX').                           | String        |
 | legal_person_identifiers[n].value | tbd      | The actual identifier value.                                                                  | String        |
 | provider_country    | tbd                    | Alpha-3 country code, as defined in ISO 3166-1, of the provider country or territory.               | 3-digit code    |
 | bic_swift           | tbd                    | International code (i.e. BIC or SWIFT code), as defined in ISO 9362, of the financial institution. | String ISO 9362 |
