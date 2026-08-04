@@ -255,7 +255,6 @@
       },
       "required": [
         "provider_name",
-        "euid",
         "provider_country",
         "bic_swift"
       ]
