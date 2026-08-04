@@ -18,7 +18,7 @@
   "account_ownership": {
     "owner_type": "entity",
     "owner_name": "Company A GmbH",
-    "legal_person_identifiers": [ { "type": "EUID", "value": "DE-HRB-123456" }, { "type": "LEI", "value": "529900T8BM49AURSDO55" }, { "type": "TAX", "value": "123/456/7890" } ] }, 
+    "legal_person_identifiers": [ { "type": "EUID", "value": "DE-HRB-123456" }, { "type": "LEI", "value": "529900T8BM49AURSDO55" }, { "type": "TAX", "value": "123/456/7890" } ] , 
   },
 
   "account_provider": {
