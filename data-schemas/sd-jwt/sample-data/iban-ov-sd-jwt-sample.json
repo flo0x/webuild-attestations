@@ -21,7 +21,7 @@
   },
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "legal_person_identifiers": [ { "type": "EUID", "value": "DE12121.HRB654321" }, { "type": "BIC", "value": "DEUTDEDB" }, { "type": "LEI", "value": "529900XYZ123ABCDEF99" } ],
+    "legal_person_identifiers": [ { "type": "EUID", "value": "DE12121.HRB654321" }, { "type": "LEI", "value": "529900XYZ123ABCDEF99" }],
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",
