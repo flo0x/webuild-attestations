@@ -16,7 +16,8 @@
 | 0.4     | 01.06.2026 | Updates of content - legal arrangements                                                |
 | 0.7     | 24.06.2026 | Updates of content based on the submission regulation and AMLR/RTS and BODS vocabulary |
 | 0.8     | 29.06.2026 | Updates of BODS vocabulary                                                             |
-| 0.9     | 03.07.2026 | Updates in regard trust and revocation                            |
+| 0.9     | 03.07.2026 | Updates in regard trust and revocation                                                 |
+| 1.0     | 23.07.2026 | Updates input PA3-Review                                                               |
 
 * Contact:
   * [Florin Coptil](mailto:florin.coptil@bosch.com)* 

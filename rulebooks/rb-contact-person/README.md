@@ -15,6 +15,7 @@
 | 0.6     | 23.06.2026 | Review in regard to verifier perspective                        |
 | 0.8     | 29.06.2026 | Review format and cleanup                                       |
 | 0.9     | 14.07.2026 | Review attributes names and cardinality                         |
+| 1.0     | 23.07.2026 | Inputs from PA3 - Perspective                                   |
 
 * Contact:
   * [Florin Coptil](mailto:florin.coptil@bosch.com)*
@@ -123,6 +124,9 @@ The data model for the Contact Person Attestation is structured as follows:
 ````
 ContactPerson Attestation
 ├─ legal_entity (M)
+│   ├─ legal_person  (M)
+│   │   ├─ legal_person_name (tstr) (M)
+│   │   ├─ legal_form_type (tstr) (M)
 │   ├─ identifier  (M)                          // At least one identifier required
 │   │   ├─ euid (str) (O)                       // European Unique Identifier
 │   │   ├─ lei (str) (O)                        // Legal Entity Identifier per ISO 17442
@@ -157,6 +161,13 @@ This attestation type is classified as:
 | `contact_persons`   | —                      | An array of objects, each representing an individual contact person. | Array of Objects |
 
 ### 2.2 Mandatory Attributes
+
+**LegalPerson Attributes**
+
+| **Data Identifier** | **Semantic Reference** | **Definition**                                                             | **Data type** |
+|---------------------|------------------------|----------------------------------------------------------------------------|---------------|
+| legal_person_name   | —                      | The complete official legal name of the legal entity                       | String        |
+| legal_form_type     | —                      | The legal form of the legal entity (e.g., SA, GmbH, Ltd, BV)              | String        |
 
 **LegalEntity Attributes**
 This object is defined once per attestation.
@@ -235,7 +246,7 @@ The `role` attribute SHOULD use descriptive role labels aligned with organizatio
 
 ### 2.9 Integrity Rules
 The following integrity rules **SHALL** be enforced:
-- The `legal_entity.identifier` object **SHALL** contain at least one non-empty identifier sub-field.
+- `Legal_Entity` **SHALL** appear exactly once and **SHALL** contain `legal_person_name`, `legal_form_type`, and at least one `identifiers`.
 - The `contact_persons` array **SHALL** contain at least one entry.
 - Each `contact_person` entry **SHALL** contain a non-empty `given_name`, `family_name`, `role`, and `email`.
 - `email` **SHALL** be a valid email address conforming to **RFC 4021**.
@@ -255,16 +266,18 @@ The Contact Person Attestation uses the SD-JWT VC format to allow for selective 
 
 | **Data Identifier**          | **Attribute Identifier**                        | **Encoding Format**     | **Reference/Notes**                                                                            | **Disclosable** |
 |:-----------------------------|:------------------------------------------------|:------------------------|:-----------------------------------------------------------------------------------------------|:----------------|
-| **Legal Entity**             | `legal_entity`                                  | Object                  | The legal entity that employs the contact persons.                                             | MUST            |
-| **Legal Entity Identifier**  |                                                 |                         |                                                                                                |                 |
-| euid                         | `legal_entity.identifier.euid`                  | String                  | European Unique Identifier — optional sub-field.                                               | MUST            |
-| lei                          | `legal_entity.identifier.lei`                   | String                  | Legal Entity Identifier (LEI) — optional sub-field.                                            | MUST            |
-| tax                          | `legal_entity.identifier.tax`                   | String                  | National tax or registration number — optional sub-field.                                      | MUST            |
-| gln                          | `legal_entity.identifier.gln`                   | String                  | Global Location Number for legal entities — optional sub-field.                                | MUST            |
-| duns                         | `legal_entity.identifier.duns`                  | String                  | Dun & Bradstreet company identifier — optional sub-field.                                      | MUST            |
-| eori                         | `legal_entity.identifier.eori`                  | String                  | EU customs identifier — optional sub-field.                                                    | MUST            |
-| bpnl                         | `legal_entity.identifier.bpnl`                  | String                  | Catena-X BPNL identifier — optional sub-field.                                                 | MUST            |
-| siren                        | `legal_entity.identifier.siren`                 | String                  | French company identifier (SIREN) — optional sub-field.                                        | MUST            |
+| **Legal Entity**             |                                                          |                         |                                                                                                               |                   |
+| legal_person_name            | `legal_entity.legal_person.legal_person_name`            | string                  | The complete official legal name of the company                                                               | MUST              |
+| legal_form_type              | `legal_entity.legal_person.legal_form_type`              | string                  | Legal form of the company (e.g., GmbH, S.A., Ltd.)                                                            | MUST              |
+| **Legal Entity Identifier**  |                                                          |                         |                                                                                                               |                   |
+| euid                         | `legal_person.identifier.euid`                           | String                  | European Unique Identifier — optional sub-field                                                                         | MUST            |
+| lei                          | `legal_person.identifier.lei`                            | String                  | Legal Entity Identifier per ISO 17442 — optional sub-field                                                              | MUST            |
+| tax                          | `legal_person.identifier.tax`                            | String                  | National tax or registration number — optional sub-field                                                                | MUST            |
+| gln                          | `legal_person.identifier.gln`                            | String                  | Global Location Number for legal entities — optional sub-field                                                          | MUST            |
+| duns                         | `legal_person.identifier.duns`                           | String                  | Dun & Bradstreet company identifier — optional sub-field                                                                | MUST            |
+| eori                         | `legal_person.identifier.eori`                           | String                  | EU customs identifier — optional sub-field                                                                              | MUST            |
+| bpnl                         | `legal_person.identifier.bpnl`                           | String                  | Catena-X BPNL identifier per ICD 0243 — optional sub-field                                                              | MUST            |
+| siren                        | `legal_person.identifier.siren`                          | String                  | French company identifier (SIREN) — optional sub-field                                                                  | MUST            |
 | **Contact Persons**          | `contact_persons`                               | Array                   | Array of contact person objects; SHALL contain at least one entry.                             | MUST            |
 | **ContactPerson Attributes** | `contact_person`                                | Object                  |                                                                                                |                 |
 | given_name                   | `given_name`                                    | String                  | Given name of the contact person; [givenName – Schema.org](https://schema.org/givenName).      | MUST            |
@@ -317,13 +330,19 @@ Here is a non-normative example payload reflecting the new model:
   "attestation_legal_category":"EAA",
   "schema_version":"1.0",
   "trust_anchor_url":"https://trust.webuildconsortium.eu/anchors/eidas-tl",
-  "legal_entity":{
-    "identifier":{
-      "euid":"DE-HRB-123456",
-      "tax":"DE123456789",
-      "lei":"529900T8BM49AURSDO55"
+
+  "legal_entity": {
+    "legal_person": {
+      "legal_person_name": "Example GmbH",
+      "legal_form_type": "GmbH"
+    },
+    "identifier": {
+      "euid": "DE-HRB-123456",
+      "lei": "5493001KJTIIGC8Y1R12",
+      "tax": "DE123456789"
     }
   },
+
   "contact_persons":[
     {
       "given_name":"Anna",
@@ -339,6 +358,7 @@ Here is a non-normative example payload reflecting the new model:
       "email":"max.mustermann@example.com"
     }
   ],
+  
   "status":{
     "type":"status-list",
     "status_list_credential":"https://issuer.example.com/status/contactperson/2026",
