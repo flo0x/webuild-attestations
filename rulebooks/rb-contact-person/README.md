@@ -53,12 +53,12 @@ In the onboarding process, a minimum of one contact person is required.
   holder company has issued Contact Person attestations for all its employees into its Company
   Wallet. The system selects the fitting employee to answer the request (e.g., a Key Account
   Manager as the battery cell sales contact person).
-- The Holder is responsible for the lifecycle of the attestation, including revocation and
-  role changes.
+- The Holder is responsible for the lifecycle of the attestation content, including revocation and
+  role changes. Holder is not responsible for the attestation schema. 
 
 The added value of the Contact Person attestation for organizations is to automate the
 onboarding and maintenance process of contact person data, increasing data accuracy and
-enabling fast and secure business interactions.
+enabling fast and secure business interactions. Self issued attestation can be n times reused. 
 
 This attestation flows only between organizations where a business relationship exists.
 
@@ -66,9 +66,10 @@ This attestation flows only between organizations where a business relationship 
 
 This Contact Person Attestation Rulebook is based on:
 - EU Company Certificate (EUCC) / European Business Wallet (EBW) framework as the foundational
-  legal identity layer for the employing organization
+  legal identity layer for the employing organization, including identifier.  
 - Schema.org vocabulary for personal name attributes
 - Core Public Organisation Vocabulary (CPOV) for contact point attributes
+- European Business Wallet Vocabulary (https://webuild-consortium.github.io/wp4-semantics-group/ebwv//vocabulary.html)
 - The Organization Ontology for role classification
 - RFC 4021 for email address formatting
 - ITU-T E.164 for telephone number formatting
@@ -220,7 +221,12 @@ No conditional attributes are defined for this attestation type.
 
 *Note: Standard JWT claims (`iss`, `iat`, `exp`) are also mandatory.*
 
-### 2.6 Optional Metadata
+| **Register Type**         | **Example Identifier Format**    |
+|---------------------------|----------------------------------|
+| EU Company Register       | EUID (e.g., DE-HRB-123456)       |
+| VAT Register              | VAT number (e.g., DE123456789)   |
+| National Company Register | Country-specific registration ID |
+| Gleif Register Authorities | [GLEIF Registration Authority List](https://www.gleif.org/en/lei-data/code-lists/gleif-registration-authorities-list?cachepath=de%2Flei-data%2Fcode-lists%2Fgleif-registration-authorities-list)|
 
 | **Data Identifier**   | **Definition**                                                              | **Data type**  |
 |:----------------------|:----------------------------------------------------------------------------|:---------------|

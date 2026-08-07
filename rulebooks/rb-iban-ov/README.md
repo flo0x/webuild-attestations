@@ -23,7 +23,6 @@
 
 * Contact:
   * [Ricky Lamberty](mailto:Ricky.Lamberty@bosch.com)*
-
 * Feedback:
 
 ## 1 Introduction
@@ -360,7 +359,7 @@ Example:
     }
   }
 }
-```
+
 
 #### 3.2.3 Example Payload
 
