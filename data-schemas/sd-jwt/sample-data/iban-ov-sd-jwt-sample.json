@@ -14,16 +14,14 @@
       "EUR"
     ]
   },
-
   "account_ownership": {
     "owner_type": "entity",
     "owner_name": "Company A GmbH",
-    "euid": "DE-HRB-123456"
+    "legal_person_identifiers": [ { "type": "EUID", "value": "DE-HRB-123456" }, { "type": "LEI", "value": "529900T8BM49AURSDO55" }, { "type": "TAX", "value": "123/456/7890" } ] 
   },
-
   "account_provider": {
     "provider_name": "Example Bank AG",
-    "euid": "DE-HRB-654321",
+    "legal_person_identifiers": [ { "type": "EUID", "value": "DE12121.HRB654321" }, { "type": "LEI", "value": "529900XYZ123ABCDEF99" }],
     "provider_country": "DEU",
     "bic_swift": "DEUTDEDB",
     "national_bank_code": "37040044",

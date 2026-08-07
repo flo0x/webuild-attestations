@@ -109,14 +109,27 @@
           "description": "Discriminator identifying whether the account owner is a legal person or a natural person. SHALL be present in all cases.",
           "enum": ["entity", "person"]
         },
-        "euid": {
-          "type": "string",
-          "description": "The EUID as unique identifier of the owner's register entry. For a sole trader, references the register entry under which the natural person is registered as operating a business. SHALL be a non-empty string.",
-          "minLength": 1,
-          "examples": [
-            "DE-HRB-123456",
-            "DE-HRA-789012"
-          ]
+        "legal_person_identifiers": {
+          "type": "array",
+          "description": "Array of objects containing unique identification strings of the legal entity owning the account.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Scheme or type of the identifier used (e.g., 'EUID', 'LEI', 'TAX').",
+                "examples": ["EUID", "LEI", "TAX"]
+              },
+              "value": {
+                "type": "string",
+                "description": "The actual identifier value.",
+                "examples": ["DE-HRB-123456", "529900T8BM49AURSDO55"]
+              }
+            },
+            "required": ["type", "value"]
+          }
         },
         "owner_name": {
           "type": "string",
@@ -148,7 +161,7 @@
             "required": ["owner_type"]
           },
           "then": {
-            "required": ["owner_name", "euid"],
+            "required": ["owner_name", "legal_person_identifiers"],
             "not": {
               "anyOf": [
                 { "required": ["given_name"] },
@@ -180,13 +193,27 @@
             "Example Bank AG"
           ]
         },
-        "euid": {
-          "type": "string",
-          "description": "EUID as unique identification number of the issuing financial institution. SHALL be a non-empty string identifying the issuing financial institution.",
-          "minLength": 1,
-          "examples": [
-            "DE-HRB-654321"
-          ]
+        "legal_person_identifiers": {
+          "type": "array",
+          "description": "Array of objects containing unique identification strings of the issuing financial institution.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Scheme or type of the identifier used (e.g., 'EUID', 'LEI', 'BIC').",
+                "examples": ["EUID", "LEI", "BIC"]
+              },
+              "value": {
+                "type": "string",
+                "description": "The actual identifier value.",
+                "examples": ["DE12121.HRB654321", "DEUTDEDB"]
+              }
+            },
+            "required": ["type", "value"]
+          }
         },
         "provider_country": {
           "type": "string",
@@ -228,7 +255,6 @@
       },
       "required": [
         "provider_name",
-        "euid",
         "provider_country",
         "bic_swift"
       ]
