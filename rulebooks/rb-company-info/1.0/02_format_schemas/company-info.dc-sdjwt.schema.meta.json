@@ -1,0 +1,42 @@
+{
+  "vct": "eu.we-build:companyinfo:1",
+  "name": "WEBuild – CompanyInfo Attestation 1.0",
+  "description": "Standardized company information credential with native selective disclosure capabilities.",
+  "display": [
+    {
+      "locale": "en-US",
+      "name": "WeBuild Corporate Identity",
+      "rendering": {
+        "backgroundColor": "#0B1F3F",
+        "textColor": "#FFFFFF"
+      }
+    }
+  ],
+  "claims": [
+    {
+      "path": ["credentialSubject", "attestation_legal_category"],
+      "display": [{ "locale": "en-US", "label": "Attestation Category" }],
+      "sd": "never"
+    },
+    {
+      "path": ["credentialSubject", "legal_entity"],
+      "display": [{ "locale": "en-US", "label": "Corporate Registration Data" }],
+      "sd": "always"
+    },
+    {
+      "path": ["credentialSubject", "number_of_employees"],
+      "display": [{ "locale": "en-US", "label": "Total Employees" }],
+      "sd": "always"
+    },
+    {
+      "path": ["credentialSubject", "trade_alias"],
+      "display": [{ "locale": "en-US", "label": "Trade Aliases" }],
+      "sd": "always"
+    },
+    {
+      "path": ["credentialSubject", "financial_statements"],
+      "display": [{ "locale": "en-US", "label": "Financial Audits" }],
+      "sd": "always"
+    }
+  ]
+}
