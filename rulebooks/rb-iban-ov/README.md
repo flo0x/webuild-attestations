@@ -621,6 +621,7 @@ as profiled by [HAIP].
 | Cryptographically bound to | none | EW-DM-12-032 |
 | Relying Party must also verify a PID | no | EW-DM-12-031 |
 | Binding subject | account owner (legal person or natural person, as set by `owner_type`) |  |
+| Binding subject | account owner (legal person or natural person, as set by `owner_type`) |  |
 
 ### 7.2 Issuance Policy
 
